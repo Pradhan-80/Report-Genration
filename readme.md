@@ -1,1 +1,1 @@
-node genrateReport.js -> running command 
+node genrateReport.js 
