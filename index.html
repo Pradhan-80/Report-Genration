@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>SIM Report Generator</title>
+</head>
+
+<body>
+
+  <h2>SIM Report Generator</h2>
+
+  <form
+    action="/generate"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+
+    <label>Work Order:</label>
+    <br>
+
+    <input
+      type="text"
+      name="workOrder"
+      required
+    />
+
+    <br><br>
+
+    <label>Excel File:</label>
+    <br>
+
+    <input
+      type="file"
+      name="excelFile"
+      accept=".xlsx"
+      required
+    />
+    <br>
+  <label>SIM Front Image:</label>
+<input
+  type="file"
+  name="simPic1"
+  accept="image/*"
+/>
+
+<br><br>
+
+<label>SIM Back Image:</label>
+<input
+  type="file"
+  name="simPic2"
+  accept="image/*"
+/>
+    <br><br>
+
+    <button type="submit">
+      Generate DOCX
+    </button>
+
+  </form>
+
+</body>
+
+</html>
