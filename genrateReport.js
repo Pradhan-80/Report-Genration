@@ -12,6 +12,7 @@ const sizeOf = require("image-size");
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname));
 
 const upload = multer({
   dest: "uploads/",
@@ -25,7 +26,6 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-/* ===================== EXCEL HELPERS ===================== */
 
 function readSheet(wb, name) {
   const sheet = wb.Sheets[name];
@@ -45,7 +45,41 @@ function findHeader(rows, keyword) {
   );
 }
 
-/* ===================== PARSERS ===================== */
+
+function parseDetails(rows) {
+  const details = {};
+
+  rows.forEach((r) => {
+    const key = String(r[0] || "").trim();
+    const value = r[1] || "";
+
+    if (!key) return;
+
+    details[key] = value;
+  });
+
+  return {
+    receivedDate: details["Received Date"] || "",
+    cardsReceived: details["No. of Cards Received in LAB"] || "",
+    cardType: details["Card_Type"] || "",
+    circle: details["Circle"] || "",
+    cardProfile: details["Card Profile"] || "",
+    vendor: details["Vendor"] || "",
+    lotSize: details["Lot Size"] || "",
+    poNo: details["PO No."] || "",
+    invoiceNo: details["Invoice No."] || "",
+    startingICCID:
+      details["Starting ICCID of Lot received in WH"] || "",
+    endingICCID:
+      details["Ending ICCID of Lot received in WH"] || "",
+    lotReceivedDate:
+      details["Lot Received Date in WH"] || "",
+    testingCompleted:
+      details["Testing Completed"] || "",
+    requestedBy:
+      details["Requested By"] || "",
+  };
+}
 
 function parseThickness(rows) {
   const i = findHeader(rows, "iccid");
@@ -56,11 +90,10 @@ function parseThickness(rows) {
     .slice(i + 1)
     .filter((r) => r[1])
     .map((r) => ({
-      srNo: r[0],
-      iccid: r[1],
-      specification: r[2],
-      observed: r[3],
-      remarks: r[4],
+      iccid: r[0],
+      specification: r[1],
+      observed: r[2],
+      remarks: r[3],
     }));
 }
 
@@ -79,9 +112,9 @@ function parseGoNoGo(rows) {
 
     out.push({
       iccid,
-      parameter: r[2],
-      specification: r[3],
-      passed: r[4],
+      parameter: r[1],
+      specification: r[2],
+      passed: r[3],
     });
   });
 
@@ -97,14 +130,13 @@ function parseVoltage(rows) {
     .slice(i + 1)
     .filter((r) => r[1])
     .map((r) => ({
-      srNo: r[0],
-      iccid: r[1],
-      classA: r[2],
-      classB: r[3],
-      classC: r[4],
-      maxV: r[5],
-      minV: r[6],
-      remarks: r[7],
+      iccid: r[0],
+      classA: r[1],
+      classB: r[2],
+      classC: r[3],
+      maxV: r[4],
+      minV: r[5],
+      remarks: r[6],
     }));
 }
 
@@ -117,20 +149,20 @@ function parseOnline(rows) {
     .slice(i + 1)
     .filter((r) => r[1])
     .map((r) => ({
-      iccid: r[1],
-      permanentImsi: r[2],
-      msisdn: r[3],
-      dataCheck: r[4],
-      incomingCall: r[5],
-      outgoingCall: r[6],
-      incomingSms: r[7],
-      outgoingSms: r[8],
-      handset: r[9],
+      iccid: r[0],
+      permanentImsi: r[1],
+      msisdn: r[2],
+      dataCheck: r[3],
+      incomingCall: r[4],
+      outgoingCall: r[5],
+      incomingSms: r[6],
+      outgoingSms: r[7],
+      handset: r[8],
     }));
 }
 
-function parseImsi(rows) {
-  const i = findHeader(rows, "ICCIDs");
+function parseDSA(rows) {
+  const i = findHeader(rows, "ICCID");
 
   if (i === -1) return [];
 
@@ -208,12 +240,12 @@ function parseOta(rows) {
     }));
 }
 
-/* ===================== MAIN EXCEL PARSER ===================== */
 
 function parseExcel(file) {
   const wb = XLSX.readFile(file);
 
   return {
+    Details: parseDetails(readSheet(wb, "Details")),
     Online: parseOnline(readSheet(wb, "Online")),
 
     thickness: parseThickness(readSheet(wb, "Thickness")),
@@ -222,15 +254,14 @@ function parseExcel(file) {
 
     goNoGo: parseGoNoGo(readSheet(wb, "GnG")),
 
-    DSA: parseImsi(readSheet(wb, "DSA")),
+    DSA: parseDSA(readSheet(wb, "DSA")),
 
     dstk: flattenDSTK(parseDSTK(readSheet(wb, "DSTK"))),
 
-    otaLogs: parseOta(readSheet(wb, "OTA")),
+    ota: parseOta(readSheet(wb, "OTA")),
   };
 }
 
-/* ===================== OPTIONAL ===================== */
 
 function suppressRepeatedValues(rows, key) {
   let lastValue = null;
@@ -249,12 +280,10 @@ function suppressRepeatedValues(rows, key) {
   });
 }
 
-/* ===================== DOCX GENERATION ===================== */
 
 function generateDocx(data, workOrder, simPic1, simPic2) {
   // optional cleanup
   data.goNoGo = suppressRepeatedValues(data.goNoGo, "iccid");
-
   data.dstk = suppressRepeatedValues(data.dstk, "iccid");
 
   const content = fs.readFileSync(DOCX_TEMPLATE, "binary");
@@ -266,24 +295,18 @@ function generateDocx(data, workOrder, simPic1, simPic2) {
     },
 
     getSize(path) {
-      return [300, 300];
+      return [600, 350];
     },
   });
 
-  // const doc = new Docxtemplater(zip, {
-  //   paragraphLoop: true,
-  //   linebreaks: true,
-  // });
+ 
   const doc = new Docxtemplater(zip, {
     paragraphLoop: true,
     linebreaks: true,
     modules: [imageModule],
   });
 
-  // doc.render({
-  //   workOrder,
-  //   ...data,
-  // });
+ 
   doc.render({
     workOrder,
 
@@ -340,7 +363,7 @@ app.post(
 
       res.setHeader(
         "Content-Disposition",
-        `attachment; filename=output_${workOrder}.docx`,
+        `attachment; filename=Report_${workOrder}.docx`,
       );
 
       res.send(buffer);

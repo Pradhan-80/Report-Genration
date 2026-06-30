@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -61,4 +61,853 @@
 
 </body>
 
+</html> -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Airtel SIM Report Portal</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --airtel-red: #e60000;
+        --airtel-red-light: #ff4d4d;
+        --text-dark: #1f2937;
+        --text-muted: #6b7280;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        overflow-x: hidden;
+
+        background: linear-gradient(
+          135deg,
+           #d33636 70%,
+          #d42525 50%,
+          #992525 0%
+        );
+      }
+
+      /* Floating background effects */
+
+      .blob {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(120px);
+        z-index: -1;
+        animation: float 10s ease-in-out infinite;
+      }
+
+      .blob1 {
+        width: 450px;
+        height: 450px;
+        background: rgba(255, 255, 255, 0.18);
+        top: -150px;
+        left: -120px;
+      }
+
+      .blob2 {
+        width: 350px;
+        height: 350px;
+        background: rgba(255, 255, 255, 0.12);
+        top: 80px;
+        right: -80px;
+      }
+
+      .blob3 {
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.15);
+        bottom: -100px;
+        left: 40%;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-25px);
+        }
+      }
+
+      .container {
+        width: 100%;
+        max-width: 950px;
+      }
+
+      .card {
+        background: rgba(248, 248, 248, 0.884);
+        backdrop-filter: blur(20px);
+
+        border-radius: 30px;
+
+        padding: 40px;
+
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
+
+        border: 1px solid rgba(255, 255, 255, 0.7);
+      }
+
+      /* Header */
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 35px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .logo {
+        width: 90px;
+        height: 90px;
+
+        border-radius: 22px;
+        overflow: hidden;
+
+        background: white;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo img {
+        width: 120px;
+        height: 120px;
+
+        object-fit: contain;
+
+        margin-top: -10px;
+      }
+
+      .brand h1 {
+        font-size: 32px;
+        color: var(--airtel-red);
+        font-weight: 800;
+      }
+
+      .brand p {
+        color: var(--text-muted);
+        margin-top: 5px;
+      }
+
+      .status {
+        padding: 10px 18px;
+        border-radius: 999px;
+
+        background: #ecfdf5;
+        color: #16a34a;
+
+        border: 1px solid #bbf7d0;
+
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      /* Inputs */
+
+      .form-group {
+        margin-bottom: 28px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--text-dark);
+        font-weight: 600;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 16px 18px;
+        border-radius: 16px;
+
+        border: 2px solid #f1f5f9;
+
+        background: white;
+
+        font-size: 15px;
+        transition: 0.3s;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+
+        border-color: var(--airtel-red);
+
+        box-shadow: 0 0 0 5px rgba(230, 0, 0, 0.08);
+      }
+
+      /* Upload cards */
+
+      .upload-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .upload-card {
+        background: white;
+
+        border: 2px dashed #ffd6d6;
+
+        border-radius: 22px;
+
+        padding: 30px 20px;
+
+        text-align: center;
+
+        transition: 0.3s;
+      }
+
+      .upload-card:hover {
+        border-color: var(--airtel-red);
+        background: #fff5f5;
+        transform: translateY(-5px);
+      }
+
+      .icon {
+        font-size: 42px;
+        margin-bottom: 12px;
+      }
+
+      .upload-card h3 {
+        color: var(--text-dark);
+        margin-bottom: 6px;
+      }
+
+      .upload-card p {
+        color: var(--text-muted);
+        font-size: 13px;
+        margin-bottom: 15px;
+      }
+
+      .upload-card input {
+        width: 100%;
+      }
+
+      /* Button */
+
+      .generate-btn {
+        width: 100%;
+
+        padding: 18px;
+
+        border: none;
+        border-radius: 18px;
+
+        font-size: 16px;
+        font-weight: 700;
+
+        color: white;
+
+        cursor: pointer;
+
+        background: linear-gradient(135deg, #f52929, #f03f3f);
+
+        transition: 0.3s;
+
+        box-shadow: 0 15px 35px rgba(230, 0, 0, 0.25);
+      }
+
+      .generate-btn:hover {
+        transform: translateY(-4px);
+
+        box-shadow: 0 20px 45px rgba(230, 0, 0, 0.35);
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        color: var(--text-muted);
+        font-size: 13px;
+      }
+
+      @media (max-width: 850px) {
+        .upload-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          padding: 25px;
+        }
+
+        .brand h1 {
+          font-size: 26px;
+        }
+      }
+    </style> -->
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --airtel-red: #e60000;
+  --airtel-red-light: #ff4d4d;
+  --airtel-dark: #b51f1f;
+
+  --text-dark: #1f2937;
+  --text-muted: #6b7280;
+
+  --card-bg: rgba(255, 255, 255, 0.92);
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  overflow: hidden;
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(255,255,255,.12),
+      transparent 40%
+    ),
+    linear-gradient(
+      135deg,
+      #e54a4a 0%,
+      #ed1f1fec 35%,
+      #d42525 60%,
+      #b51f1f 100%
+    );
+}
+
+/* Right Shape */
+
+body::after {
+  content: "";
+
+  position: fixed;
+
+  top: 0;
+  right: 0;
+
+  width: 42%;
+  height: 100%;
+
+  background: rgba(0,0,0,.12);
+
+  clip-path: polygon(
+    100% 0,
+    100% 100%,
+    0 100%
+  );
+
+  z-index: -2;
+}
+
+/* Floating Blobs */
+
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: -1;
+  animation: float 10s ease-in-out infinite;
+}
+
+.blob1 {
+  width: 450px;
+  height: 450px;
+  background: rgba(255,255,255,.15);
+  top: -150px;
+  left: -120px;
+}
+
+.blob2 {
+  width: 350px;
+  height: 350px;
+  background: rgba(255,255,255,.12);
+  top: 80px;
+  right: -80px;
+}
+
+.blob3 {
+  width: 300px;
+  height: 300px;
+  background: rgba(255,255,255,.10);
+  bottom: -100px;
+  left: 40%;
+}
+
+@keyframes float {
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-25px);
+  }
+}
+
+/* Container */
+
+.container {
+  width: 100%;
+  max-width: 950px;
+  position: relative;
+}
+
+.container::before {
+  content: "";
+
+  position: absolute;
+
+  width: 600px;
+  height: 600px;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.12),
+      transparent 70%
+    );
+
+  filter: blur(80px);
+
+  z-index: -1;
+}
+
+/* Main Card */
+
+.card {
+  position: relative;
+
+  background: var(--card-bg);
+
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  border-radius: 32px;
+
+  padding: 48px;
+
+  border: 1px solid rgba(255,255,255,.7);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.18),
+    0 10px 30px rgba(255,255,255,.05);
+
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 40%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.25),
+      transparent
+    );
+
+  transform: skewX(-20deg);
+
+  animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+  100% {
+    left: 200%;
+  }
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.logo {
+  width: 90px;
+  height: 90px;
+
+  border-radius: 22px;
+
+  overflow: hidden;
+
+  background: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow:
+    0 12px 30px rgba(230,0,0,.15);
+}
+
+.logo img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-top: -10px;
+}
+
+.brand h1 {
+  font-size: 34px;
+  color: var(--airtel-red);
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.brand p {
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+/* Form */
+
+.form-group {
+  margin-bottom: 28px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--text-dark);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+input[type="text"] {
+  width: 100%;
+
+  padding: 18px;
+
+  border-radius: 18px;
+
+  border: 2px solid #eef2f7;
+
+  background: white;
+
+  font-size: 15px;
+
+  transition: .3s;
+}
+
+input[type="text"]:focus {
+  outline: none;
+
+  border-color: var(--airtel-red);
+
+  box-shadow:
+    0 0 0 5px rgba(230,0,0,.08);
+}
+
+/* Upload Cards */
+
+.upload-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.upload-card {
+  background: white;
+
+  border: 2px dashed #ffd7d7;
+
+  border-radius: 24px;
+
+  padding: 30px 20px;
+
+  text-align: center;
+
+  transition: .30s ease;
+
+  box-shadow:
+    0 8px 25px rgba(0,0,0,.04);
+}
+
+.upload-card:hover {
+
+  transform:
+    translateY(-8px);
+
+  border-color:
+    var(--airtel-red);
+
+  background:
+    #fffafa;
+
+  box-shadow:
+    0 15px 35px rgba(230,0,0,.12);
+}
+
+.icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+
+  transition: .3s;
+}
+
+.upload-card:hover .icon {
+  transform:
+    scale(1.15);
+}
+
+.upload-card h3 {
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.upload-card p {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+/* File Input */
+
+.upload-card input[type="file"] {
+  width: fit-content;
+  margin: auto;
+  display: block;
+}
+
+.upload-card input[type="file"]::file-selector-button {
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      #f6f6f6
+    );
+
+  border:
+    1px solid #e5e7eb;
+
+  padding: 10px 16px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: .3s;
+}
+
+.upload-card input[type="file"]::file-selector-button:hover {
+
+  background:
+    var(--airtel-red);
+
+  color: white;
+}
+
+/* Generate Button */
+
+.generate-btn {
+  width: 100%;
+
+  padding: 18px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  color: white;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f72e2eeb,
+      #e41313
+    );
+
+  transition: .3s;
+
+  box-shadow:
+    0 15px 35px rgba(230,0,0,.25);
+}
+
+.generate-btn:hover {
+
+  transform:
+    translateY(-4px);
+
+  box-shadow:
+    0 20px 45px rgba(230,0,0,.35);
+}
+
+/* Footer */
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+
+  color: var(--text-muted);
+
+  font-size: 13px;
+}
+
+/* Mobile */
+
+@media (max-width: 850px) {
+
+  .upload-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 25px;
+  }
+
+  .brand {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .brand h1 {
+    font-size: 26px;
+  }
+}
+  </style>
+  </head>
+
+  <body>
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <div class="brand">
+            <div class="logo">
+              <img src="redairtellogo.png" alt="Airtel Logo" />
+            </div>
+
+            <div>
+              <h1>SIM Report Generator</h1>
+              <p>
+                Upload SIM details and supporting documents to generate a report
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <form action="/generate" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label>Work Order Number</label>
+
+            <input
+              type="text"
+              name="workOrder"
+              placeholder="Enter Work Order Number"
+              required
+            />
+          </div>
+
+          <div class="upload-grid">
+            <div class="upload-card">
+              <div class="icon">📊</div>
+
+              <h3>Excel File</h3>
+
+              <p>Upload report data (.xlsx)</p>
+
+              <input type="file" name="excelFile" accept=".xlsx" required />
+            </div>
+
+            <div class="upload-card">
+              <div class="icon">💳</div>
+
+              <h3>SIM Front</h3>
+
+              <p>Upload front side image</p>
+
+              <input type="file" name="simPic1" accept="image/*" />
+            </div>
+
+            <div class="upload-card">
+              <div class="icon">🛡️</div>
+
+              <h3>SIM Back</h3>
+
+              <p>Upload back side image</p>
+
+              <input type="file" name="simPic2" accept="image/*" />
+            </div>
+          </div>
+
+          <button type="submit" class="generate-btn">
+            Generate Report
+          </button>
+        </form>
+
+        <div class="footer">
+          Secure Upload • Airtel Operations • DOCX Export
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
